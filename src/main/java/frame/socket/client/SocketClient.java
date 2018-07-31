@@ -11,6 +11,7 @@ import java.util.Random;
 import org.apache.log4j.Logger;
 
 import frame.socket.config.HeartCheckResult;
+import frame.socket.exception.HeartTimeOutException;
 import frame.socket.util.StringUtil;
 
 public abstract class  SocketClient {
@@ -105,8 +106,7 @@ public abstract class  SocketClient {
 			is = socket.getInputStream();
 			BufferedInputStream bis=new BufferedInputStream(is);
 			byte[] msgbuf=new byte[WR_size];
-			int size;
-			while (isConnected && (size=bis.read(msgbuf))!=-1) {
+			while (isConnected && (bis.read(msgbuf))!=-1) {
 				String msg=StringUtil.BytestoString(msgbuf, WR_charset);
 				if(isOpenHeart){//心跳检测
 					HeartCheckResult rs=CheckHeart(msg);
@@ -182,7 +182,14 @@ public abstract class  SocketClient {
 	 */
 	public void CheckSocketIsTimeout(){
 		if(TimeoutCount>=MaxTimeoutCount){
+			HandleHeartTimeOut(this);
 			ClientcolseSocket();
+			try {
+				throw new HeartTimeOutException("地址为："+Address+",端口为："+
+				PORT+"的链接心跳已超时！");
+			} catch (HeartTimeOutException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -251,5 +258,14 @@ public abstract class  SocketClient {
 		}else{
 			return HeartCheckResult.IsNotHeartMsg;
 		}
+	}
+	/**
+	 * 用户可以通过在子类中重写该方法，自定义检测到心跳超时需要对系统进行做的处理
+	 * 关于该socket的关闭和停止，不需要用户处理，
+	 * 框架会自行处理
+	 * @param client
+	 */
+	protected void HandleHeartTimeOut(SocketClient client){
+		
 	}
 }

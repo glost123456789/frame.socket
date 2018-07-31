@@ -1,6 +1,5 @@
 package frame.socket.exception;
 
-import java.io.PrintStream;
 
 import org.apache.log4j.Logger;
 
@@ -19,9 +18,9 @@ public class OutofIndexException extends Exception{
 	}
 	
 	@Override
-	public void printStackTrace(PrintStream s) {
+	public void printStackTrace() {
 		// TODO Auto-generated method stub
 		logger.error(reason);
-		super.printStackTrace(s);
+		super.printStackTrace();
 	}
 }

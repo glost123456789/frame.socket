@@ -89,7 +89,7 @@ public abstract class SocketServer {
 				ClientSocket client=new ClientSocket(this,true,
 						socket, socketid, Timeout, isOpenHeart);
 				socketmap.put(socketid, client);
-				Send("你好，服务端已接收到您的信息:socketid="+socketid,socketid);
+//				Send("你好，服务端已接收到您的信息:socketid="+socketid,socketid);
 			}
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
@@ -115,26 +115,6 @@ public abstract class SocketServer {
 				}
 				
 		}
-
-//	public void getMessage(String socketid) {
-//		try {
-//			InputStream inputStream = socketmap.get(socketid).getInputStream();
-//			BufferedInputStream is=new BufferedInputStream(inputStream);
-//			byte[] msgbuf=new byte[WR_size];
-//			int size;
-//			while ((size=is.read(msgbuf))!=-1) {
-//				onMessage(new String(msgbuf, 0, size,WR_charset),socketid);
-//				try {
-//					Thread.sleep(2000);
-//				} catch (InterruptedException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//			}
-//		}catch (IOException e) {
-//			onError(e.getMessage(),socketid);
-//		}
-//	}
 	
 	/**
 	 * 消息处理
@@ -190,15 +170,15 @@ public abstract class SocketServer {
 		return WR_charset;
 	}
 	
-	public static void main(String[] args) {
-		String msg="+++183+++";
-		Logger logger=Logger.getLogger(ServerSocket.class);
-		
-		if(msg.matches("\\+\\+\\+[0-9]*\\+\\+\\+")){
-			logger.info("aaa"+msg.matches("\\+\\+\\+[0-9]*\\+\\+\\+"));
-		}else{
-			logger.info("bbb"+msg.matches("\\+\\+\\+[0-9]*\\+\\+\\+"));
-		}
-	}
+//	public static void main(String[] args) {
+//		String msg="+++183+++";
+//		Logger logger=Logger.getLogger(ServerSocket.class);
+//		
+//		if(msg.matches("\\+\\+\\+[0-9]*\\+\\+\\+")){
+//			logger.info("aaa"+msg.matches("\\+\\+\\+[0-9]*\\+\\+\\+"));
+//		}else{
+//			logger.info("bbb"+msg.matches("\\+\\+\\+[0-9]*\\+\\+\\+"));
+//		}
+//	}
 	
 }

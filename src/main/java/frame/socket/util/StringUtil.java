@@ -8,6 +8,7 @@ import frame.socket.exception.OutofIndexException;
 
 public class StringUtil {
 	
+	@SuppressWarnings("unused")
 	private static Logger logger=Logger.getLogger(StringUtil.class);
 	
 	public static byte[] StringtoBytes(String msg,int size,String charset) 

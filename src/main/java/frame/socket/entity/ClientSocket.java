@@ -1,11 +1,9 @@
 package frame.socket.entity;
 
-import java.awt.SecondaryLoop;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
-import java.net.SocketException;
 
 import frame.socket.config.HeartCheckResult;
 import frame.socket.server.SocketServer;
@@ -85,8 +83,7 @@ public class ClientSocket {
 			InputStream inputStream = socket.getInputStream();
 			BufferedInputStream is=new BufferedInputStream(inputStream);
 			byte[] msgbuf=new byte[socketServer.getWR_size()];
-			int size;
-			while (isConnected && (size=is.read(msgbuf))!=-1) {
+			while (isConnected && (is.read(msgbuf))!=-1) {
 				String msg=StringUtil.BytestoString(msgbuf, socketServer.getWR_charset());
 				HeartCheckResult rs=socketServer.checkHeart(msg, socketId);
 				if(isOpenHeartCheck){
